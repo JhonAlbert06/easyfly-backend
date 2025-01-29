@@ -48,12 +48,24 @@ func SignUp(c *gin.Context) {
 		return
 	}
 
+	// get the Guest role by name
+	var role models.Role
+	err = initializers.DB.First(&role, "name = ?", "Guest").Error
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Failed to get role",
+		})
+		return
+	}
+
 	user := models.User{
 		ID:              uuid.New(),
 		Email:        body.Email,
 		Password:        string(hash),
 		FullName:        body.FullName,
 		PasswordVersion: uuid.New(),
+		RoleId: role.ID,
+		IsEnabled: true,
 	}
 
 	result := initializers.DB.Create(&user)

@@ -12,5 +12,6 @@ type User struct {
 	Email           string    `gorm:"unique"`
 	Password        string
 	PasswordVersion uuid.UUID `gorm:"type:char(36)"`
+	IsEnabled       bool
 	gorm.Model
 }
