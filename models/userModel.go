@@ -5,6 +5,8 @@ import (
 	"gorm.io/gorm"
 )
 
+// Usuarios
+
 type User struct {
 	ID           	uuid.UUID `gorm:"type:char(36);primary_key;"`
 	RoleId 		  	uuid.UUID `gorm:"type:char(36)"`

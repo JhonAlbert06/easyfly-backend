@@ -5,11 +5,13 @@ import (
 	"gorm.io/gorm"
 )
 
-// Roles
+// Aeropuertos
 
-type Role struct {
+type Airport struct {
 	ID           	uuid.UUID `gorm:"type:char(36);primary_key;"`
 	Name 		  	string
-	Description     string
+	Code 		  	string
+	City 		  	string
+	Country 	  	string
 	gorm.Model
 }

@@ -5,11 +5,12 @@ import (
 	"gorm.io/gorm"
 )
 
-// Roles
+// Asientos
 
-type Role struct {
+type Seat struct {
 	ID           	uuid.UUID `gorm:"type:char(36);primary_key;"`
-	Name 		  	string
-	Description     string
+	FlightID      	uuid.UUID `gorm:"type:char(36)"`
+	SeatNumber 	  	string
+	IsBooked 	  	bool
 	gorm.Model
 }
