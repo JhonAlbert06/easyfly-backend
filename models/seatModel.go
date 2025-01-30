@@ -12,5 +12,6 @@ type Seat struct {
 	FlightID      	uuid.UUID `gorm:"type:char(36)"`
 	SeatNumber 	  	string
 	IsBooked 	  	bool
+	Class 		  	string // Economy, Business, First Class
 	gorm.Model
 }
