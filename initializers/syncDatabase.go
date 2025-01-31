@@ -8,8 +8,14 @@ import (
 
 func SyncDatabase() {
 	err := DB.AutoMigrate(
-		&models.User{},
+		&models.Airport{},
+		&models.Booking{},
+		&models.Flight{},
+		&models.Payment{},
 		&models.Role{},
+		&models.Seat{},
+		&models.Ticket{},
+		&models.User{},
 	)
 	if err != nil {
 		fmt.Println(err)

@@ -9,8 +9,8 @@ import (
 
 type Airport struct {
 	ID           	uuid.UUID `gorm:"type:char(36);primary_key;"`
-	Name 		  	string
-	Code 		  	string
+	Name 		  	string `gorm:"unique"`
+	Code 		  	string `gorm:"unique"`
 	City 		  	string
 	Country 	  	string
 	gorm.Model
