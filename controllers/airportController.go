@@ -25,7 +25,5 @@ func GetAirports(c *gin.Context) {
 		resAirports = append(resAirports, responses.GetResAirport(airport))
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"airports": resAirports,
-	})
+	c.JSON(http.StatusOK, resAirports)
 }
