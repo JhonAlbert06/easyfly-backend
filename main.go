@@ -24,11 +24,15 @@ func main() {
 		})
 	})
 
+	// User
 	r.POST("/user/signup", controllers.SignUp)
 	r.POST("/user/login", controllers.Login)
 
 	r.GET("/user/loadUser", middleware.RequireAuth, controllers.LoadUser)
 	r.POST("/user/changeUserPassword", middleware.RequireAuth, controllers.ChangePassword)
+
+	// Airports
+	r.GET("/airports", controllers.GetAirports)
 
 	err := r.Run()
 	if err != nil {
