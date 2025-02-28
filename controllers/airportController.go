@@ -25,5 +25,10 @@ func GetAirports(c *gin.Context) {
 		resAirports = append(resAirports, responses.GetResAirport(airport))
 	}
 
+	if(len(resAirports) == 0){
+		c.JSON(http.StatusOK, []responses.ResAirport{})
+		return
+	}
+
 	c.JSON(http.StatusOK, resAirports)
 }

@@ -2,7 +2,9 @@ package initializers
 
 import (
 	"errors"
+	"fmt"
 	"log"
+	"time"
 
 	"github.com/JhonAlbert06/easyfly-backend/models"
 	"github.com/google/uuid"
@@ -80,5 +82,44 @@ func CreateData() {
 			}
 		}
 	}
+
+	airportsDB := []models.Airport{}
+	DB.Find(&airportsDB)
+
+	flights := []models.Flight{}
+	for _, origin := range airportsDB {
+		for i := 0; i < 5; i++ {
+			destination := airportsDB[(i+1)%len(airportsDB)] // Evita que el origen sea igual al destino
+			flights = append(flights, models.Flight{
+				ID:                 uuid.New(),
+				AirLine:           fmt.Sprintf("Airline%d", i+1),
+				FlightNumber:      fmt.Sprintf("FL%d-%s-%s", i+1, origin.Code, destination.Code),
+				AirportOriginID:   origin.ID,
+				AirportDestinationID: destination.ID,
+				DepartureTime:     time.Now().Add(time.Duration(i*24) * time.Hour),
+				ArrivalTime:       time.Now().Add(time.Duration((i*24)+5) * time.Hour),
+				Price:             200 + float64(i*50),
+				SeatsTotal:        150 + (i * 10),
+				SeatsBooked:       i * 10,
+				SeatsAvailable:    150 - (i * 10),
+				Status:            []string{"Scheduled", "Delayed", "Cancelled", "Completed", "Scheduled"}[i],
+			})
+		}
+	}
+
+	for _, flight := range flights {
+		var existingFlight models.Flight
+		result := DB.Where("flight_number = ?", flight.FlightNumber).First(&existingFlight)
+	
+		if result.Error != nil { // Si no se encuentra, lo creamos
+			if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+				DB.Create(&flight)
+			} else {
+				log.Println("Error checking flight:", result.Error)
+			}
+		}
+	}
+
+
 
 }

@@ -41,6 +41,9 @@ func main() {
 	// Airports
 	r.GET("/airports", controllers.GetAirports)
 
+	// Flights
+	r.GET("/flights", controllers.GetFlights)
+
 	err := r.Run()
 	if err != nil {
 		return
